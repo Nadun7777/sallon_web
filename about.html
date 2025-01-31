@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Beauty Salon</title>
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    
+
+
+    <!-- Custom Styles -->
+    <style>
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Gradient Text Effect */
+        .gradient-text {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Three.js Container Styling */
+        #three-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+            /* Mobile Menu Styles */
+    @media (max-width: 768px) {
+        .mobile-menu {
+            display: none;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+        }
+    }
+
+    /* Responsive Typography */
+    @media (max-width: 640px) {
+        h1 {
+            font-size: 2.5rem !important;
+        }
+        
+        h2 {
+            font-size: 2rem !important;
+        }
+        
+        .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+    }
+
+    /* Smooth Scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        display: none;
+    }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Three.js Background Container -->
+    <div id="three-container"></div>
+
+    <header class="fixed top-0 w-full bg-white/80 backdrop-blur-md shadow-sm z-50">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center">
+                    <span class="text-2xl font-bold text-pink-500">Elegant Beauty</span>
+                </a>
+    
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#" class="text-gray-700 hover:text-pink-500 transition-colors">Home</a>
+                    
+                    <!-- Services Dropdown -->
+                    <div class="relative group">
+                        <button class="flex items-center text-gray-700 hover:text-pink-500 transition-colors">
+                            Services
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="py-2">
+                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-pink-50 hover:text-pink-500">Hair Styling</a>
+                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-pink-50 hover:text-pink-500">Makeup</a>
+                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-pink-50 hover:text-pink-500">Nail Care</a>
+                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-pink-50 hover:text-pink-500">Spa Treatment</a>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <a href="#" class="text-gray-700 hover:text-pink-500 transition-colors">Gallery</a>
+                    <a href="#" class="text-gray-700 hover:text-pink-500 transition-colors">About</a>
+                    <a href="#" class="text-gray-700 hover:text-pink-500 transition-colors">Contact</a>
+                    
+                    <!-- Book Now Button -->
+                    <a href="#" class="bg-pink-500 text-white px-6 py-2 rounded-full hover:bg-pink-600 transition-colors">
+                        Book Now
+                    </a>
+                </div>
+    
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-gray-700 hover:text-pink-500 transition-colors" id="mobile-menu-button">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    
+        <!-- Mobile Menu -->
+        <div class="lg:hidden hidden" id="mobile-menu">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#" class="block text-gray-700 hover:text-pink-500 transition-colors">Home</a>
+                <a href="#" class="block text-gray-700 hover:text-pink-500 transition-colors">Services</a>
+                <a href="#" class="block text-gray-700 hover:text-pink-500 transition-colors">Gallery</a>
+                <a href="#" class="block text-gray-700 hover:text-pink-500 transition-colors">About</a>
+                <a href="#" class="block text-gray-700 hover:text-pink-500 transition-colors">Contact</a>
+                <a href="#" class="block bg-pink-500 text-white px-4 py-2 rounded-full text-center hover:bg-pink-600 transition-colors">
+                    Book Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+<!-- About Page Hero Section -->
+<section class="relative bg-white pt-40 pb-16 overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0">
+        <!-- Floating Beauty Elements -->
+        <div class="absolute w-full h-full overflow-hidden">
+            <!-- Floating Scissors -->
+            <div class="absolute animate-float opacity-10" style="top: 10%; left: 5%;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="#FF69B4">
+                    <path d="M12.5 7.5c0-1.1-.9-2-2-2s-2 .9-2 2s.9 2 2 2s2-.9 2-2zm3.8-4.5L19 6.3l-3.7 3.7l2.1 2.1L14 15.5l-2.1-2.1L8.2 17l-.7-.7l3.7-3.7L9 10.4l3.7-3.7L10.5 4.5l3.8-3.8c.4-.4 1-.4 1.4 0s.4 1 0 1.4l-1.4 1.4zM19 17.5c0 1.1-.9 2-2 2s-2-.9-2-2s.9-2 2-2s2 .9 2 2z"/>
+                </svg>
+            </div>
+            <!-- Floating Comb -->
+            <div class="absolute animate-float-delayed opacity-10" style="top: 70%; right: 10%;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="#FF69B4">
+                    <path d="M4 5h16v2H4zm0 4h16v2H4zm0 4h16v2H4zm0 4h16v2H4z"/>
+                </svg>
+            </div>
+            <!-- Beauty Product -->
+            <div class="absolute animate-float-slow opacity-10" style="top: 40%; left: 80%;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="#FF69B4">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8z"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Gradient Orbs -->
+        <div class="absolute top-0 -left-4 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob"></div>
+        <div class="absolute top-0 -right-4 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-100 rounded-full mix-blend-multiply filter blur-xl opacity-50 animate-blob animation-delay-4000"></div>
+
+        <!-- Sparkle Effects -->
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute h-1 w-1 bg-white rounded-full animate-twinkle" style="top: 20%; left: 30%;"></div>
+            <div class="absolute h-1 w-1 bg-white rounded-full animate-twinkle animation-delay-1000" style="top: 60%; left: 80%;"></div>
+            <div class="absolute h-1 w-1 bg-white rounded-full animate-twinkle animation-delay-2000" style="top: 40%; left: 50%;"></div>
+        </div>
+    </div>
+
+    <div class="relative container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- Navigation -->
+            <nav class="flex justify-center items-center space-x-2 mb-8 opacity-0 animate-fade-in">
+                <a href="index.html" class="text-gray-600 hover:text-pink-500 text-sm transition-all duration-300 hover:scale-105">
+                    Home
+                </a>
+                <span class="text-gray-400">/</span>
+                <span class="text-pink-500 text-sm px-3 py-1 bg-pink-50 rounded-full">About Us</span>
+            </nav>
+
+            <!-- Main Content -->
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 opacity-0 animate-slide-up">
+                <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                    Our Beauty Journey
+                </span>
+            </h1>
+            
+            <p class="text-gray-600 text-lg mb-12 leading-relaxed opacity-0 animate-slide-up animation-delay-200">
+                Discover the story behind our commitment to transforming beauty and wellness
+            </p>
+
+            <!-- Stats Section -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 opacity-0 animate-fade-in animation-delay-400">
+                <div class="group p-4 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-pink-50 transition-all duration-300 hover:scale-105">
+                    <div class="text-2xl font-bold text-pink-500 mb-1 counter" data-target="10">0</div>
+                    <div class="text-gray-500 text-sm">Years Experience</div>
+                </div>
+                <div class="group p-4 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-pink-50 transition-all duration-300 hover:scale-105">
+                    <div class="text-2xl font-bold text-pink-500 mb-1 counter" data-target="5000">0</div>
+                    <div class="text-gray-500 text-sm">Happy Clients</div>
+                </div>
+                <div class="group p-4 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-pink-50 transition-all duration-300 hover:scale-105">
+                    <div class="text-2xl font-bold text-pink-500 mb-1 counter" data-target="15">0</div>
+                    <div class="text-gray-500 text-sm">Expert Staff</div>
+                </div>
+                <div class="group p-4 bg-white/50 backdrop-blur-sm rounded-xl hover:bg-pink-50 transition-all duration-300 hover:scale-105">
+                    <div class="text-2xl font-bold text-pink-500 mb-1 counter" data-target="50">0</div>
+                    <div class="text-gray-500 text-sm">Services</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes float {
+        0% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes float-delayed {
+        0% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-15px) rotate(-5deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes float-slow {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+
+    @keyframes blob {
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
+    }
+
+    @keyframes twinkle {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-float-delayed {
+        animation: float-delayed 7s ease-in-out infinite;
+    }
+
+    .animate-float-slow {
+        animation: float-slow 8s ease-in-out infinite;
+    }
+
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+
+    .animate-twinkle {
+        animation: twinkle 3s ease-in-out infinite;
+    }
+
+    .animate-fade-in {
+        animation: fadeIn 1s ease-out forwards;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animation-delay-200 { animation-delay: 200ms; }
+    .animation-delay-400 { animation-delay: 400ms; }
+    .animation-delay-1000 { animation-delay: 1s; }
+    .animation-delay-2000 { animation-delay: 2s; }
+    .animation-delay-4000 { animation-delay: 4s; }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const counters = document.querySelectorAll('.counter');
+        
+        const animateCounter = (counter) => {
+            const target = +counter.getAttribute('data-target');
+            const speed = 200;
+            const step = target / speed;
+            let count = 0;
+
+            const updateCount = () => {
+                count += step;
+                if (count < target) {
+                    counter.innerText = Math.ceil(count);
+                    requestAnimationFrame(updateCount);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+
+            updateCount();
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.5
+        });
+
+        counters.forEach(counter => observer.observe(counter));
+    });
+</script>
+
+
+<!-- Salon Introduction Section -->
+<section class="pt-32 pb-16 bg-gradient-to-b from-pink-50/50 to-white relative overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 left-0 w-full h-full">
+        <div class="absolute top-20 left-10 w-32 h-32 bg-pink-100 rounded-full blur-3xl opacity-60"></div>
+        <div class="absolute bottom-10 right-10 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-60"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Grid Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <!-- Left Column - Image -->
+            <div class="relative">
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1974&auto=format&fit=crop" 
+                         alt="Elegant Beauty Salon Interior" 
+                         class="w-full h-[600px] object-cover">
+                </div>
+                
+                <!-- Experience Badge - Updated with more padding -->
+                <div class="absolute -bottom-6 -right-6 bg-pink-500 text-white p-8 rounded-full">
+                    <div class="text-center">
+                        <span class="block text-4xl font-bold">10+</span>
+                        <span class="text-sm font-medium tracking-wider uppercase">Years of<br>Excellence</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Content -->
+            <div class="space-y-8">
+                <div class="space-y-4">
+                    <h1 class="text-4xl lg:text-5xl font-bold text-gray-800">
+                        Welcome to 
+                        <span class="text-pink-500">Elegant Beauty</span>
+                    </h1>
+                    <div class="w-20 h-1 bg-pink-500"></div>
+                </div>
+
+                <p class="text-gray-600 text-lg leading-relaxed">
+                    At Elegant Beauty, we believe in bringing out your natural beauty through our expert services and personalized care. With over a decade of experience, we've been transforming looks and boosting confidence for thousands of satisfied clients.
+                </p>
+
+                <!-- Feature Boxes -->
+                <div class="grid grid-cols-2 gap-6">
+                    <!-- Feature 1 -->
+                    <div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="text-pink-500 mb-3">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Expert Stylists</h3>
+                        <p class="text-gray-600 mt-2">Certified professionals with years of experience</p>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow">
+                        <div class="text-pink-500 mb-3">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800">Premium Products</h3>
+                        <p class="text-gray-600 mt-2">Using only high-quality beauty products</p>
+                    </div>
+                </div>
+
+                <!-- CTA Button -->
+                <a href="#book-appointment" 
+                   class="inline-block px-8 py-4 bg-pink-500 text-white rounded-full font-semibold hover:bg-pink-600 transform hover:scale-105 transition-all duration-300">
+                    Book Your Appointment
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Appointment Form Modal -->
+    <div id="appointmentModal" class="fixed inset-0 bg-black/50 hidden z-50">
+        <div class="min-h-screen px-4 text-center">
+            <div class="inline-block h-screen align-middle">&#8203;</div>
+
+            <!-- Modal content -->
+            <div class="inline-block w-full max-w-[500px] my-2 text-left align-middle transition-all transform bg-white shadow-xl rounded-lg overflow-hidden" style="max-height: 98vh;">
+                <!-- Form Header -->
+                <div class="border-b p-6">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-gray-800">Book Your Appointment</h3>
+                        <button onclick="closeModal()" class="text-gray-400 hover:text-gray-500">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Form Content - Made scrollable -->
+                <div class="overflow-y-auto" style="max-height: calc(98vh - 100px);">
+                    <div class="p-8">
+                        <form id="appointmentForm" class="space-y-6">
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                                <input type="text" required 
+                                    class="w-full px-4 py-2 rounded border border-gray-300 focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+                                <input type="tel" required 
+                                    class="w-full px-4 py-2 rounded border border-gray-300 focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Email</label>
+                                <input type="email" required 
+                                    class="w-full px-4 py-2 rounded border border-gray-300 focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Preferred Date</label>
+                                <input type="date" required 
+                                    class="w-full px-4 py-2 rounded border border-gray-300 focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Service Type</label>
+                                <select class="w-full px-4 py-2 rounded border border-gray-300 focus:border-pink-500 focus:ring-1 focus:ring-pink-500">
+                                    <option value="">Select a service</option>
+                                    <option value="haircut">Haircut</option>
+                                    <option value="coloring">Hair Coloring</option>
+                                    <option value="styling">Hair Styling</option>
+                                    <option value="treatment">Hair Treatment</option>
+                                    <option value="facial">Facial</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Special Notes</label>
+                                <textarea class="w-full px-4 py-2 rounded border border-gray-300 focus:border-pink-500 focus:ring-1 focus:ring-pink-500 h-24 resize-none"></textarea>
+                            </div>
+
+                            <div class="border-t pt-6">
+                                <button type="submit" 
+                                        class="w-full bg-pink-500 text-white py-3 rounded font-medium hover:bg-pink-600 transition-colors">
+                                    Confirm Appointment
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- JavaScript -->
+<script>
+    function openModal() {
+        document.getElementById('appointmentModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('appointmentModal').classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    document.querySelector('[href="#book-appointment"]').addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
+    });
+
+    document.getElementById('appointmentModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+
+    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Appointment request submitted successfully!');
+        closeModal();
+    });
+</script>
+
+<!-- Vision & Mission Section -->
+<section class="relative py-16 bg-gradient-to-b from-white to-pink-50">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute inset-0" style="background-image: radial-gradient(#ff69b420 1px, transparent 1px); background-size: 20px 20px;"></div>
+    </div>
+
+    <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                        Our Vision & Mission
+                    </span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Vision Card -->
+                <div class="group relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Our Vision</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        To be the leading beauty destination that empowers individuals...
+                    </p>
+                    
+                    <!-- Hover Popup -->
+                    <div class="popup-content opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute left-0 right-0 -bottom-4 transform translate-y-full bg-white p-6 rounded-xl shadow-2xl transition-all duration-300 z-10">
+                        <h4 class="text-lg font-semibold text-pink-500 mb-3">Our Vision in Detail</h4>
+                        <p class="text-gray-600 mb-4">
+                            To be the leading beauty destination that empowers individuals to embrace their unique beauty and enhance their natural radiance through innovative, sustainable, and personalized beauty solutions.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-gray-600">
+                                <span class="w-2 h-2 bg-pink-500 rounded-full mr-2"></span>
+                                Leading industry innovation
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <span class="w-2 h-2 bg-pink-500 rounded-full mr-2"></span>
+                                Personalized beauty solutions
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <span class="w-2 h-2 bg-pink-500 rounded-full mr-2"></span>
+                                Sustainable practices
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Mission Card -->
+                <div class="group relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2v16z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Our Mission</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        To deliver exceptional beauty services and experiences...
+                    </p>
+
+                    <!-- Hover Popup -->
+                    <div class="popup-content opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute left-0 right-0 -bottom-4 transform translate-y-full bg-white p-6 rounded-xl shadow-2xl transition-all duration-300 z-10">
+                        <h4 class="text-lg font-semibold text-purple-500 mb-3">Our Mission in Detail</h4>
+                        <p class="text-gray-600 mb-4">
+                            To deliver exceptional beauty services and experiences that transform, inspire, and elevate our clients' confidence while maintaining the highest standards of professionalism and customer care.
+                        </p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center text-gray-600">
+                                <span class="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                                Exceptional service quality
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <span class="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                                Professional expertise
+                            </li>
+                            <li class="flex items-center text-gray-600">
+                                <span class="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                                Client satisfaction focus
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Core Values Card -->
+                <div class="group relative bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <svg class="w-8 h-8 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">Core Values</h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-pink-500 rounded-full mr-2"></span>
+                            Excellence in Service
+                        </li>
+                        <li class="flex items-center">
+                            <span class="w-2 h-2 bg-pink-500 rounded-full mr-2"></span>
+                            Innovation & Creativity
+                        </li>
+                    </ul>
+
+                    <!-- Hover Popup -->
+                    <div class="popup-content opacity-0 invisible group-hover:opacity-100 group-hover:visible absolute left-0 right-0 -bottom-4 transform translate-y-full bg-white p-6 rounded-xl shadow-2xl transition-all duration-300 z-10">
+                        <h4 class="text-lg font-semibold text-pink-500 mb-3">Our Core Values in Detail</h4>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="font-medium text-gray-800 mb-2">Excellence</h5>
+                                <p class="text-sm text-gray-600">Striving for perfection in every service we provide</p>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-800 mb-2">Innovation</h5>
+                                <p class="text-sm text-gray-600">Embracing new techniques and technologies</p>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-800 mb-2">Integrity</h5>
+                                <p class="text-sm text-gray-600">Maintaining highest ethical standards</p>
+                            </div>
+                            <div>
+                                <h5 class="font-medium text-gray-800 mb-2">Customer Focus</h5>
+                                <p class="text-sm text-gray-600">Putting clients' needs first</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Popup animation styles */
+    .popup-content {
+        transform: translateY(10px);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .group:hover .popup-content {
+        transform: translateY(0);
+    }
+
+    /* Add some spacing for the popup to show */
+    .group {
+        margin-bottom: 100px;
+    }
+
+    /* Ensure popups appear above other elements */
+    .popup-content {
+        z-index: 20;
+    }
+
+    /* Optional: Add a fade overlay when popup is visible */
+    .group:hover::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 80%, rgba(255,255,255,0.8) 100%);
+        pointer-events: none;
+    }
+</style>
+
+<!-- Our Team Section -->
+<section class="relative py-20 bg-gradient-to-b from-pink-50 to-white overflow-hidden">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute inset-0" style="background-image: radial-gradient(#ff69b420 1px, transparent 1px); background-size: 20px 20px;"></div>
+    </div>
+
+    <div class="container mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16 -mt-20"> <!-- Added -mt-8 -->
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                    Meet Our Expert Team
+                </span>
+            </h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto rounded-full mb-6"></div>
+            <p class="text-gray-600 leading-relaxed">
+                Our talented team of beauty professionals is dedicated to bringing out your natural beauty and helping you feel confident and radiant.
+            </p>
+        </div>
+
+
+        <!-- Team Slider Container -->
+        <div class="relative">
+            <div class="swiper teamSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Team Member Card Template -->
+                    <div class="swiper-slide">
+                        <div class="group relative">
+                            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
+                                <!-- Image Container with Adjusted Height -->
+                                <div class="relative overflow-hidden" style="height: 300px;">
+                                    <img src="team-member-image.jpg" 
+                                         alt="Team Member" 
+                                         class="w-full h-full object-cover object-center transform transition-transform duration-500 group-hover:scale-110">
+                                    
+                                    <!-- Social Media Overlay -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4 transform translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
+                                            <!-- Twitter -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- Instagram -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- LinkedIn -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Sarah Johnson</h3>
+                                    <p class="text-pink-500 font-medium mb-4">Senior Beauty Specialist</p>
+                                    <p class="text-gray-600 text-sm">
+                                        With over 10 years of experience in beauty therapy and skincare treatments.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member Card Template -->
+                    <div class="swiper-slide">
+                        <div class="group relative">
+                            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
+                                <!-- Image Container with Adjusted Height -->
+                                <div class="relative overflow-hidden" style="height: 300px;">
+                                    <img src="team-member-image.jpg" 
+                                         alt="Team Member" 
+                                         class="w-full h-full object-cover object-center transform transition-transform duration-500 group-hover:scale-110">
+                                    
+                                    <!-- Social Media Overlay -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4 transform translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
+                                            <!-- Twitter -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- Instagram -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- LinkedIn -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Sarah Johnson</h3>
+                                    <p class="text-pink-500 font-medium mb-4">Senior Beauty Specialist</p>
+                                    <p class="text-gray-600 text-sm">
+                                        With over 10 years of experience in beauty therapy and skincare treatments.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member Card Template -->
+                    <div class="swiper-slide">
+                        <div class="group relative">
+                            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
+                                <!-- Image Container with Adjusted Height -->
+                                <div class="relative overflow-hidden" style="height: 300px;">
+                                    <img src="team-member-image.jpg" 
+                                         alt="Team Member" 
+                                         class="w-full h-full object-cover object-center transform transition-transform duration-500 group-hover:scale-110">
+                                    
+                                    <!-- Social Media Overlay -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4 transform translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
+                                            <!-- Twitter -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- Instagram -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- LinkedIn -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Sarah Johnson</h3>
+                                    <p class="text-pink-500 font-medium mb-4">Senior Beauty Specialist</p>
+                                    <p class="text-gray-600 text-sm">
+                                        With over 10 years of experience in beauty therapy and skincare treatments.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member Card Template -->
+                    <div class="swiper-slide">
+                        <div class="group relative">
+                            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
+                                <!-- Image Container with Adjusted Height -->
+                                <div class="relative overflow-hidden" style="height: 300px;">
+                                    <img src="team-member-image.jpg" 
+                                         alt="Team Member" 
+                                         class="w-full h-full object-cover object-center transform transition-transform duration-500 group-hover:scale-110">
+                                    
+                                    <!-- Social Media Overlay -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4 transform translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
+                                            <!-- Twitter -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- Instagram -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- LinkedIn -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Sarah Johnson</h3>
+                                    <p class="text-pink-500 font-medium mb-4">Senior Beauty Specialist</p>
+                                    <p class="text-gray-600 text-sm">
+                                        With over 10 years of experience in beauty therapy and skincare treatments.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member Card Template -->
+                    <div class="swiper-slide">
+                        <div class="group relative">
+                            <div class="bg-white rounded-2xl overflow-hidden shadow-lg transform transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-2">
+                                <!-- Image Container with Adjusted Height -->
+                                <div class="relative overflow-hidden" style="height: 300px;">
+                                    <img src="team-member-image.jpg" 
+                                         alt="Team Member" 
+                                         class="w-full h-full object-cover object-center transform transition-transform duration-500 group-hover:scale-110">
+                                    
+                                    <!-- Social Media Overlay -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-4 transform translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
+                                            <!-- Twitter -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- Instagram -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                                </svg>
+                                            </a>
+                                            <!-- LinkedIn -->
+                                            <a href="#" class="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm hover:bg-pink-500 transition-colors duration-300">
+                                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Sarah Johnson</h3>
+                                    <p class="text-pink-500 font-medium mb-4">Senior Beauty Specialist</p>
+                                    <p class="text-gray-600 text-sm">
+                                        With over 10 years of experience in beauty therapy and skincare treatments.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div class="swiper-button-next after:content-[''] w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </div>
+                <div class="swiper-button-prev after:content-[''] w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+                    <svg class="w-5 h-5 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Add Swiper JS and CSS -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".teamSwiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 4,
+            },
+        },
+    });
+</script>
+
+<!-- Achievements Section -->
+<section class="relative py-16 bg-gradient-to-b from-white to-pink-50">
+    <!-- Background Elements -->
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute inset-0" style="background-image: radial-gradient(#ff69b420 1px, transparent 1px); background-size: 20px 20px;"></div>
+    </div>
+
+    <div class="container mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                    Our Recognition & Awards
+                </span>
+            </h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto rounded-full mb-6"></div>
+            <p class="text-gray-600 leading-relaxed">
+                Excellence recognized through prestigious awards and certifications
+            </p>
+        </div>
+
+        <!-- Achievements Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Achievement Item 1 -->
+            <div class="group relative">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                     onclick="openAchievementModal('achievement1')">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1598887544487-c73a0d3d4d2e?w=500&auto=format" 
+                             alt="Best Salon Award 2024" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6 text-white">
+                                <h3 class="text-xl font-bold mb-2">Best Salon Award 2024</h3>
+                                <p class="text-sm">Click to view details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievement Item 2 -->
+            <div class="group relative">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                     onclick="openAchievementModal('achievement2')">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1607461510822-e657679d8d08?w=500&auto=format" 
+                             alt="Professional Excellence Certificate" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6 text-white">
+                                <h3 class="text-xl font-bold mb-2">Professional Excellence Certificate</h3>
+                                <p class="text-sm">Click to view details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievement Item 3 -->
+            <div class="group relative">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                     onclick="openAchievementModal('achievement3')">
+                    <div class="relative h-64">
+                        <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?w=500&auto=format" 
+                             alt="Industry Recognition 2023" 
+                             class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <div class="p-6 text-white">
+                                <h3 class="text-xl font-bold mb-2">Industry Recognition 2023</h3>
+                                <p class="text-sm">Click to view details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Template -->
+    <div id="achievementModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-md overflow-hidden"> <!-- Changed max-w-lg to max-w-md for smaller width -->
+            <div class="relative">
+                <!-- Modal Close Button -->
+                <button onclick="closeAchievementModal()" 
+                        class="absolute top-6 right-6 text-gray-500 hover:text-gray-700 z-10">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+
+                <!-- Modal Content -->
+                <div class="modal-content p-6">
+                    <!-- Content will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript for Modal Functionality -->
+<script>
+    const achievementDetails = {
+        achievement1: {
+            title: "Best Salon Award 2024",
+            image: "https://images.unsplash.com/photo-1598887544487-c73a0d3d4d2e?w=500&auto=format",
+            description: "Awarded the prestigious Best Salon Award 2024 for exceptional service quality and customer satisfaction.",
+            date: "January 2024",
+            organization: "Beauty Industry Association",
+            details: [
+                "Recognized for innovative beauty treatments",
+                "Exceptional customer service standards",
+                "High-quality salon management"
+            ]
+        },
+        achievement2: {
+            title: "Professional Excellence Certificate",
+            image: "https://images.unsplash.com/photo-1607461510822-e657679d8d08?w=500&auto=format",
+            description: "Certified for maintaining highest standards in professional beauty services.",
+            date: "December 2023",
+            organization: "International Beauty Academy",
+            details: [
+                "Advanced beauty treatment certification",
+                "Professional staff training",
+                "Safety and hygiene standards"
+            ]
+        },
+        achievement3: {
+            title: "Industry Recognition 2023",
+            image: "https://images.unsplash.com/photo-1576678927484-cc907957088c?w=500&auto=format",
+            description: "Recognized for outstanding contribution to the beauty industry.",
+            date: "November 2023",
+            organization: "Beauty Professionals Guild",
+            details: [
+                "Industry leadership recognition",
+                "Innovation in beauty services",
+                "Community engagement"
+            ]
+        }
+    };
+
+    function openAchievementModal(achievementId) {
+        const modal = document.getElementById('achievementModal');
+        const details = achievementDetails[achievementId];
+        const modalContent = modal.querySelector('.modal-content');
+
+        modalContent.innerHTML = `
+            <div class="relative h-48 -mx-6 -mt-6 mb-6 group overflow-hidden"> <!-- Added overflow-hidden and group -->
+                <img src="${details.image}" 
+                     alt="${details.title}" 
+                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"> <!-- Added hover effect -->
+                <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-2">${details.title}</h3>
+                <p class="text-gray-600 text-sm mb-3">${details.description}</p>
+                
+                <div class="mb-3">
+                    <div class="text-xs text-gray-500">Awarded by</div>
+                    <div class="text-sm font-medium">${details.organization}</div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="text-xs text-gray-500">Date Received</div>
+                    <div class="text-sm font-medium">${details.date}</div>
+                </div>
+
+                <div class="border-t pt-3">
+                    <h4 class="font-bold text-sm mb-2">Key Highlights:</h4>
+                    <ul class="list-disc list-inside space-y-1 text-sm">
+                        ${details.details.map(detail => `<li class="text-gray-600">${detail}</li>`).join('')}
+                    </ul>
+                </div>
+            </div>
+        `;
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeAchievementModal() {
+        const modal = document.getElementById('achievementModal');
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('achievementModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeAchievementModal();
+        }
+    });
+</script>
+
+<!-- Testimonials Section -->
+<section class="relative py-16 bg-gradient-to-b from-pink-50 to-white overflow-hidden">
+    <div class="container mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                    What Our Clients Say
+                </span>
+            </h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto rounded-full mb-6"></div>
+        </div>
+
+        <!-- Testimonials Carousel -->
+        <div class="relative max-w-6xl mx-auto">
+            <div class="testimonial-carousel relative h-[400px]">
+                <div id="testimonialWrapper" class="relative w-full h-full">
+                    <!-- Testimonials will be inserted here by JavaScript -->
+                </div>
+
+                <!-- Navigation Buttons -->
+                <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white p-3 rounded-full shadow-lg hover:bg-pink-50 transition-all duration-300">
+                    <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                    </svg>
+                </button>
+                <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white p-3 rounded-full shadow-lg hover:bg-pink-50 transition-all duration-300">
+                    <svg class="w-6 h-6 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Pagination Dots -->
+            <div class="flex justify-center space-x-2 mt-8" id="pagination"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+.testimonial-card {
+    position: absolute;
+    width: 500px;
+    transition: all 0.5s ease;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.testimonial-card.active {
+    opacity: 1;
+    transform: scale(1) translateX(-50%);
+    z-index: 3;
+    left: 50%;
+}
+
+.testimonial-card.prev {
+    opacity: 0.7;
+    transform: scale(0.9) translateX(-100%);
+    z-index: 2;
+    left: 30%;
+}
+
+.testimonial-card.next {
+    opacity: 0.7;
+    transform: scale(0.9) translateX(0%);
+    z-index: 2;
+    left: 70%;
+}
+
+.testimonial-card.hidden-card {
+    opacity: 0;
+    transform: scale(0.8);
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .testimonial-card {
+        width: 90%;
+    }
+    
+    .testimonial-card.prev,
+    .testimonial-card.next {
+        opacity: 0;
+    }
+}
+</style>
+
+<script>
+const testimonials = [
+    {
+        id: 1,
+        text: "The attention to detail and personalized service I receive here is unmatched. My experience has always been exceptional!",
+        author: "Sarah Johnson",
+        role: "Regular Client",
+        image: "https://randomuser.me/api/portraits/women/1.jpg",
+        rating: 5
+    },
+    {
+        id: 2,
+        text: "Professional, skilled, and always up-to-date with the latest trends. This salon exceeds expectations every time.",
+        author: "Michael Chen",
+        role: "Business Executive",
+        image: "https://randomuser.me/api/portraits/men/2.jpg",
+        rating: 5
+    },
+    {
+        id: 3,
+        text: "I've never felt more confident and beautiful. The team here truly understands what their clients want.",
+        author: "Emma Wilson",
+        role: "Fashion Blogger",
+        image: "https://randomuser.me/api/portraits/women/3.jpg",
+        rating: 5
+    },
+    {
+        id: 4,
+        text: "Outstanding service every time! The team's expertise and attention to detail is remarkable.",
+        author: "David Thompson",
+        role: "Local Artist",
+        image: "https://randomuser.me/api/portraits/men/4.jpg",
+        rating: 5
+    },
+    {
+        id: 5,
+        text: "A perfect blend of professionalism and creativity. Always leaving with a smile!",
+        author: "Lisa Anderson",
+        role: "Entrepreneur",
+        image: "https://randomuser.me/api/portraits/women/5.jpg",
+        rating: 5
+    },
+    {
+        id: 6,
+        text: "Consistently excellent service. They truly understand what their clients need.",
+        author: "James Rodriguez",
+        role: "Professional Model",
+        image: "https://randomuser.me/api/portraits/men/6.jpg",
+        rating: 5
+    }
+];
+
+class TestimonialCarousel {
+    constructor() {
+        this.currentIndex = 0;
+        this.wrapper = document.getElementById('testimonialWrapper');
+        this.pagination = document.getElementById('pagination');
+        this.init();
+    }
+
+    init() {
+        this.renderTestimonials();
+        this.renderPagination();
+        this.setupEventListeners();
+        this.updateCards();
+        this.startAutoPlay();
+    }
+
+    renderTestimonials() {
+        testimonials.forEach((testimonial, index) => {
+            const card = document.createElement('div');
+            card.className = 'testimonial-card bg-white rounded-2xl p-8 shadow-xl';
+            card.innerHTML = `
+                <div class="flex items-center mb-6">
+                    <img src="${testimonial.image}" 
+                         alt="${testimonial.author}" 
+                         class="w-16 h-16 rounded-full object-cover shadow-md"
+                    >
+                    <div class="ml-4">
+                        <h4 class="font-bold text-gray-800">${testimonial.author}</h4>
+                        <p class="text-sm text-gray-500">${testimonial.role}</p>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    ${this.generateStars(testimonial.rating)}
+                </div>
+                <p class="text-gray-600 text-lg italic">"${testimonial.text}"</p>
+            `;
+            this.wrapper.appendChild(card);
+        });
+    }
+
+    generateStars(rating) {
+        return `
+            <div class="flex gap-1">
+                ${Array(5).fill(0).map((_, i) => `
+                    <svg class="w-5 h-5 ${i < rating ? 'text-yellow-400' : 'text-gray-300'}" 
+                         fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    renderPagination() {
+        testimonials.forEach((_, index) => {
+            const dot = document.createElement('button');
+            dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${
+                index === 0 ? 'bg-pink-500 w-6' : 'bg-pink-200'
+            }`;
+            dot.addEventListener('click', () => this.goToSlide(index));
+            this.pagination.appendChild(dot);
+        });
+    }
+
+    setupEventListeners() {
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            this.prev();
+            this.resetAutoPlay();
+        });
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            this.next();
+            this.resetAutoPlay();
+        });
+    }
+
+    updateCards() {
+        const cards = [...this.wrapper.children];
+        const total = cards.length;
+
+        cards.forEach((card, index) => {
+            card.className = 'testimonial-card bg-white rounded-2xl p-8 shadow-xl';
+            
+            if (index === this.currentIndex) {
+                card.classList.add('active');
+            } else if (index === this.getPrevIndex()) {
+                card.classList.add('prev');
+            } else if (index === this.getNextIndex()) {
+                card.classList.add('next');
+            } else {
+                card.classList.add('hidden-card');
+            }
+        });
+
+        this.updatePagination();
+    }
+
+    getPrevIndex() {
+        return (this.currentIndex - 1 + testimonials.length) % testimonials.length;
+    }
+
+    getNextIndex() {
+        return (this.currentIndex + 1) % testimonials.length;
+    }
+
+    updatePagination() {
+        const dots = [...this.pagination.children];
+        dots.forEach((dot, index) => {
+            dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${
+                index === this.currentIndex ? 'bg-pink-500 w-6' : 'bg-pink-200'
+            }`;
+        });
+    }
+
+    next() {
+        this.currentIndex = this.getNextIndex();
+        this.updateCards();
+    }
+
+    prev() {
+        this.currentIndex = this.getPrevIndex();
+        this.updateCards();
+    }
+
+    goToSlide(index) {
+        this.currentIndex = index;
+        this.updateCards();
+        this.resetAutoPlay();
+    }
+
+    startAutoPlay() {
+        this.autoPlayInterval = setInterval(() => this.next(), 5000); // Change slide every 5 seconds
+    }
+
+    resetAutoPlay() {
+        clearInterval(this.autoPlayInterval);
+        this.startAutoPlay();
+    }
+}
+
+// Initialize carousel when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new TestimonialCarousel();
+});
+</script>
+
+<!-- Contact Section -->
+<section class="py-16 bg-gradient-to-b from-white to-pink-50">
+    <div class="container mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+                    Contact Us
+                </span>
+            </h2>
+            <div class="w-20 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto rounded-full mb-6"></div>
+            <p class="text-gray-600">We'd love to hear from you! Reach out through any of these channels.</p>
+        </div>
+
+        <!-- Contact Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <!-- Location Card -->
+            <div class="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="bg-gradient-to-br from-pink-400 to-purple-400 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-4 text-gray-800">Our Location</h3>
+                <div class="text-gray-600 text-center">
+                    <p class="mb-1">123 Beauty Street</p>
+                    <p class="mb-1">Colombo 03</p>
+                    <p>Sri Lanka</p>
+                </div>
+            </div>
+
+            <!-- Phone Card -->
+            <div class="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="bg-gradient-to-br from-pink-400 to-purple-400 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-4 text-gray-800">Contact Numbers</h3>
+                <div class="text-center">
+                    <a href="tel:+94112345678" class="block mb-2 text-gray-600 hover:text-pink-500 transition-colors">+94 11 234 5678</a>
+                    <a href="tel:+94771234567" class="block text-gray-600 hover:text-pink-500 transition-colors">+94 77 123 4567</a>
+                </div>
+            </div>
+
+            <!-- Email Card -->
+            <div class="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="bg-gradient-to-br from-pink-400 to-purple-400 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-4 text-gray-800">Email Us</h3>
+                <div class="text-center">
+                    <a href="mailto:info@yoursalon.com" class="block mb-2 text-gray-600 hover:text-pink-500 transition-colors">info@yoursalon.com</a>
+                    <a href="mailto:bookings@yoursalon.com" class="block text-gray-600 hover:text-pink-500 transition-colors">bookings@yoursalon.com</a>
+                </div>
+            </div>
+
+            <!-- Hours Card -->
+            <div class="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="bg-gradient-to-br from-pink-400 to-purple-400 w-16 h-16 rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-center mb-4 text-gray-800">Opening Hours</h3>
+                <div class="text-center text-gray-600">
+                    <p class="mb-2">Monday - Friday</p>
+                    <p class="font-medium text-pink-500">9:00 AM - 7:00 PM</p>
+                    <p class="mt-2 text-sm text-gray-500">Closed on Weekends</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="mt-16 max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-lg">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.798467127767!2d79.84771431477269!3d6.927076994997947!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2591614a33361%3A0x8d8a7adb9abf5be3!2sColombo%2003%2C%20Colombo!5e0!3m2!1sen!2slk!4v1625641111111!5m2!1sen!2slk"
+                width="100%"
+                height="450"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                class="w-full"
+            ></iframe>
+        </div>
+    </div>
+</section>
+
+
+        <!-- ================ FOOTER SECTION ================ -->
+<footer class="bg-gray-900 text-gray-300">
+    <!-- Main Footer Content -->
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Company Info Section -->
+            <div class="space-y-4">
+                <h3 class="text-2xl font-bold gradient-text">Elegant Beauty</h3>
+                <p class="text-sm leading-loose">
+                    Transform your look with our premium beauty services. 
+                    Experience luxury and professionalism at its finest.
+                </p>
+                <!-- Social Media Links -->
+                <div class="flex space-x-4 pt-4">
+                    <a href="#" class="hover:text-pink-500 transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="hover:text-pink-500 transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="hover:text-pink-500 transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-semibold text-white">Quick Links</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="hover:text-pink-500 transition-colors">About Us</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-pink-500 transition-colors">Services</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-pink-500 transition-colors">Gallery</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-pink-500 transition-colors">Book Appointment</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Services Links -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-semibold text-white">Our Services</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="hover:text-pink-500 transition-colors">Hair Styling</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-pink-500 transition-colors">Makeup</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-pink-500 transition-colors">Nail Care</a>
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-pink-500 transition-colors">Spa Treatment</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-semibold text-white">Contact Us</h4>
+                <div class="space-y-2">
+                    <p class="flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        123 Beauty Street, Colombo
+                    </p>
+                    <p class="flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        +94 11 234 5678
+                    </p>
+                    <p class="flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        info@elegantbeauty.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="border-t border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-sm">
+                    © 2025 Elegant Beauty. All rights reserved.
+                </p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-sm hover:text-pink-500 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-sm hover:text-pink-500 transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- ================ THREE.JS ANIMATION SCRIPT ================ -->
+    <script>
+        // Initialize Three.js Scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('three-container').appendChild(renderer.domElement);
+
+        // Create Particles
+        const particles = new THREE.Group();
+        const particleGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+        const particleMaterial = new THREE.MeshBasicMaterial({ color: 0xff69b4 });
+
+        // Add Multiple Particles
+        for(let i = 0; i < 100; i++) {
+            const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+            particle.position.set(
+                Math.random() * 40 - 20,
+                Math.random() * 40 - 20,
+                Math.random() * 40 - 20
+            );
+            particles.add(particle);
+        }
+
+        scene.add(particles);
+        camera.position.z = 30;
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            particles.rotation.x += 0.001;
+            particles.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Window Resize Handler
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
